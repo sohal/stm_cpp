@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Build
+[bB]uild
+_deps

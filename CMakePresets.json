@@ -1,0 +1,38 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 28,
+        "patch": 0
+    },
+    "configurePresets": [
+    {
+        "name": "cpp_app",
+        "displayName": "cpp_app",
+        "description": "Application for stm32 Nucleo board",
+        "generator": "Ninja",
+        "environment": {
+            "CORTEX_TYPE": "CM0",
+            "LLVM_CLANG_ROOT_FOLDER": "/Users/sohal/llvm_arm",
+            "SEGGER_JLINK_ROOT_FOLDER": "/Applications/SEGGER/JLink"
+        },
+        "binaryDir": "${sourceDir}/build/${presetName}",
+        "cacheVariables": {
+            "FETCHCONTENT_UPDATES_DISCONNECTED": "OFF",
+            "CMAKE_BUILD_TYPE": "Debug",
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+            "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/_deps/cmake_scripts-src/toolchains/llvm_clang_arm.cmake",
+            "GITHUB_BRANCH_TOOLCHAIN": "HEAD",
+            "STM32_TYPE": "f0",
+            "STM32_DEVICE": "STM32F031x6",
+            "JLINK_DEVICE": "STM32F031K6"
+        }
+    }
+    ],
+    "buildPresets": [
+    {
+        "name": "cpp_app",
+        "configurePreset": "cpp_app"
+    }
+    ]
+}

@@ -41,21 +41,29 @@ else()
     message( STATUS "Compiling for Host system")
 endif()
 
-#set(SRCS
-#    ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
-#)
+set(${PROJECT_NAME}_SRCS
+    ${CMAKE_SOURCE_DIR}/app/main.cpp
+)
+add_executable (${PROJECT_NAME}
+    ${${PROJECT_NAME}_SRCS}
+)
 
-#add_executable(${PROJECT_NAME}
-#    ${SRCS}
-#)
-#set_target_properties(${PROJECT_NAME}
-#    PROPERTIES
-#        CXX_STANDARD_REQUIRED 17
-#        CXX_EXTENSIONS OFF
-#)
-#set(OTHER_INCLUDE_DIR
-#    ${cmsis_SOURCE_DIR}/include/cmsis
-#)
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
+        CXX_STANDARD_REQUIRED 17
+        CXX_EXTENSIONS OFF
+)
 
-#set(${PROJECT_NAME}_LLVM_LINKER_SCRIPT "llvm.ld")
-#set(${PROJECT_NAME}_LLVM_LINKER_PATH "${CMAKE_SOURCE_DIR}/cubemx")
+set(OTHER_INCLUDE_DIR
+    ${cmsis_SOURCE_DIR}/include/cmsis
+)
+
+target_link_libraries(${PROJECT_NAME}
+    cmsis_v5
+)
+
+set(${PROJECT_NAME}_LLVM_LINKER_SCRIPT "llvm.ld")
+set(${PROJECT_NAME}_LLVM_LINKER_PATH "${CMAKE_SOURCE_DIR}")
+
+setTargetLinkOptions(PROJECT_NAME)
+

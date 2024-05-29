@@ -72,9 +72,7 @@ public:
     };
 };
 
-#if 0
 static_assert(
-    is_standard_layout_v<k_gpio>, // trait class
+    std::is_standard_layout_v<k_gpio>, // trait class
     "k_gpio is not standard layout, expect problems"
 );
-#endif

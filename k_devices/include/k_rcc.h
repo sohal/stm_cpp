@@ -38,9 +38,7 @@ public:
     void Init(void);
 };
 
-#if 0
 static_assert(
-    is_standard_layout_v<k_rcc>, // trait class
+    std::is_standard_layout_v<k_rcc>, // trait class
     "k_rcc is not standard layout, expect problems"
 );
-#endif

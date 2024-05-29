@@ -36,9 +36,10 @@ target_include_directories(${libName}
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${libName}>
 )
 
-target_compile_features(${libName}
-    PRIVATE
-    cxx_std_17
+set_target_properties(${libName}
+    PROPERTIES
+        CXX_STANDARD_REQUIRED 17
+        CXX_EXTENSIONS OFF
 )
 
 set_target_properties(${libName}

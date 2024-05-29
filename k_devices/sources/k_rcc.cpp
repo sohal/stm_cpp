@@ -1,6 +1,4 @@
 #include <cstdint>
-#include <bitset>
-#include <cstddef>
 #include "k_rcc.h"
 
 void k_rcc::Init(void) {

@@ -26,7 +26,7 @@ set(${libName}_PUBLIC_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/include/k_address.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/k_register.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/k_rcc.h
-#    ${CMAKE_CURRENT_SOURCE_DIR}/include/k_gpio.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/k_flash.h
 )
 
 target_include_directories(${libName}
@@ -86,6 +86,7 @@ target_compile_options(${libName}
 target_sources(${libName}
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_rcc.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_flash.cpp
 )
 
 target_link_libraries(${libName}

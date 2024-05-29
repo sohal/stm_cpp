@@ -1,23 +1,24 @@
 #pragma once
 #include <cstdint>
 #include <type_traits>
-#include "k_device_register.h"
+#include "k_address.h"
+#include "k_register.h"
 
 //registers for GPIO for STM32
 
 class k_gpio{
 private:
-    k_device_register MODR;         // offset 0x00 GPIO port mode register
-    k_device_register OTYPER;       // offset 0x04 GPIO port output type register
-    k_device_register OSPEEDR;      // offset 0x08 GPIO port output speed register
-    k_device_register PUPDR;        // offset 0x00 GPIO port
-    k_device_register IDR;          // offset 0x00 GPIO port
-    k_device_register ODR;          // offset 0x00 GPIO port
-    k_device_register BSRR;         // offset 0x00 GPIO port
-    k_device_register LCKR;         // offset 0x00 GPIO port
-    k_device_register AFRL;         // offset 0x00 GPIO port
-    k_device_register AFRH;         // offset 0x00 GPIO port
-    k_device_register BRR;          // offset 0x00 GPIO port
+    k_register MODR;         // offset 0x00 GPIO port mode register
+    k_register OTYPER;       // offset 0x04 GPIO port output type register
+    k_register OSPEEDR;      // offset 0x08 GPIO port output speed register
+    k_register PUPDR;        // offset 0x00 GPIO port
+    k_register IDR;          // offset 0x00 GPIO port
+    k_register ODR;          // offset 0x00 GPIO port
+    k_register BSRR;         // offset 0x00 GPIO port
+    k_register LCKR;         // offset 0x00 GPIO port
+    k_register AFRL;         // offset 0x00 GPIO port
+    k_register AFRH;         // offset 0x00 GPIO port
+    k_register BRR;          // offset 0x00 GPIO port
 public:
     enum k_gpio_port_type {
         PORTA,
@@ -66,12 +67,14 @@ public:
         OUT,
     };
     void *operator new(size_t, k_gpio_port_type p) {
-        auto address = 0x4800'0000 + p * 0x0000'0400;
+        auto address = k_address::AHB2_BASE_ADDRESS + (p * 0x0000'0400);
         return reinterpret_cast<void *>(address);
     };
 };
 
+#if 0
 static_assert(
     is_standard_layout_v<k_gpio>, // trait class
     "k_gpio is not standard layout, expect problems"
 );
+#endif

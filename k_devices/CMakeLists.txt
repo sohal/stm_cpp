@@ -21,8 +21,13 @@ add_library(${libName}::framework ALIAS ${libName})
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-# set public headers as a globbed function
-file(GLOB ${libName}_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+# set public headers
+set(${libName}_PUBLIC_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/k_address.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/k_register.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/k_rcc.h
+#    ${CMAKE_CURRENT_SOURCE_DIR}/include/k_gpio.h
+)
 
 target_include_directories(${libName}
     PUBLIC
@@ -79,7 +84,7 @@ target_compile_options(${libName}
 ## Sub project ---------------------------------------------------------------
 target_sources(${libName}
     PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_gpio.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_rcc.cpp
 )
 
 target_link_libraries(${libName}

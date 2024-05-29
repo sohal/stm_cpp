@@ -61,6 +61,7 @@ set(OTHER_INCLUDE_DIR
 
 target_link_libraries(${PROJECT_NAME}
     cmsis_v5
+    k_devices
 )
 
 set(${PROJECT_NAME}_LLVM_LINKER_SCRIPT "llvm.ld")

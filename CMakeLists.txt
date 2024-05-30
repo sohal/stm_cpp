@@ -43,10 +43,17 @@ else()
 endif()
 
 set(${PROJECT_NAME}_SRCS
-    ${CMAKE_SOURCE_DIR}/app/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/app/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/app/startup/sources/vectors.c
 )
+
 add_executable (${PROJECT_NAME}
     ${${PROJECT_NAME}_SRCS}
+)
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/app/startup/include
 )
 
 set_target_properties(${PROJECT_NAME}

@@ -34,3 +34,7 @@
 # Build
 [bB]uild
 _deps
+
+# dot files
+*.dot
+*.dot.*

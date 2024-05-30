@@ -57,10 +57,6 @@ set_target_properties(${PROJECT_NAME}
         CXX_EXTENSIONS OFF
 )
 
-set(OTHER_INCLUDE_DIR
-    ${cmsis_SOURCE_DIR}/include/cmsis
-)
-
 target_link_libraries(${PROJECT_NAME}
     k_devices
 )

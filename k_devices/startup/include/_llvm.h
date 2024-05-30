@@ -4,6 +4,10 @@ extern "C" {
 #ifndef VECTORS_LLVM
 #define VECTORS_LLVM
 
+#ifndef __NO_RETURN
+#define __NO_RETURN __attribute__((__noreturn__))
+#endif
+
 #ifndef __PROGRAM_START
 #define __PROGRAM_START               _start
 #endif
@@ -31,6 +35,7 @@ extern "C" {
 #ifndef __STACK_LIMIT
 #define __STACK_LIMIT                 __StackLimit
 #endif
+
 
 #endif
 

@@ -85,7 +85,7 @@ target_sources(${libName}
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_rcc.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_flash.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/startup/sources/stm32f031k6.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/startup/sources/stm32f031k6.cpp
 )
 
 target_link_libraries(${libName}

@@ -32,11 +32,12 @@ project(
 )
 
 if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
+    # Include dependencies from repositories ---------------------------------------
     set(GITHUB_BRANCH_cmsis_v5 "5.9.0")
     include(${cmake_scripts_SOURCE_DIR}/frameworks/cmsis_v5/cmsis_v5.cmake)
-    set(GITHUB_BRANCH_cmsis_dsp "1.15.0")
-    include(${cmake_scripts_SOURCE_DIR}/frameworks/cmsis_dsp/cmsis_dsp.cmake)
-    include(${cmake_scripts_SOURCE_DIR}/frameworks/segger_rtt/segger_rtt.cmake)
+    #set(GITHUB_BRANCH_cmsis_dsp "1.15.0")
+    #include(${cmake_scripts_SOURCE_DIR}/frameworks/cmsis_dsp/cmsis_dsp.cmake)
+    #include(${cmake_scripts_SOURCE_DIR}/frameworks/segger_rtt/segger_rtt.cmake)
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/k_devices)
 else()
     message( STATUS "Compiling for Host system")
@@ -44,16 +45,10 @@ endif()
 
 set(${PROJECT_NAME}_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/app/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/app/startup/sources/vectors.c
 )
 
 add_executable (${PROJECT_NAME}
     ${${PROJECT_NAME}_SRCS}
-)
-
-target_include_directories(${PROJECT_NAME}
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/app/startup/include
 )
 
 set_target_properties(${PROJECT_NAME}
@@ -67,7 +62,6 @@ set(OTHER_INCLUDE_DIR
 )
 
 target_link_libraries(${PROJECT_NAME}
-    cmsis_v5
     k_devices
 )
 

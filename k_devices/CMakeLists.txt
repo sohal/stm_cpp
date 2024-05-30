@@ -13,13 +13,13 @@ project(
     DESCRIPTION "Device Register library for STM32 in Modern CPP"
 )
 
-# Main target ------------------------------------------------------------------
-add_library(${libName} STATIC)
-add_library(${libName}::framework ALIAS ${libName})
-
 # Includes ---------------------------------------------------------------------
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+
+# Main target ------------------------------------------------------------------
+add_library(${libName} STATIC)
+add_library(${libName}::framework ALIAS ${libName})
 
 # set public headers
 set(${libName}_PUBLIC_HEADERS
@@ -27,11 +27,13 @@ set(${libName}_PUBLIC_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/include/k_register.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/k_rcc.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/k_flash.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/startup/include/_llvm.h
 )
 
 target_include_directories(${libName}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/startup/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${libName}>
 )
@@ -40,10 +42,6 @@ set_target_properties(${libName}
     PROPERTIES
         CXX_STANDARD_REQUIRED 17
         CXX_EXTENSIONS OFF
-)
-
-set_target_properties(${libName}
-    PROPERTIES
         PUBLIC_HEADER           "${${libName}_PUBLIC_HEADERS}"
         EXPORT_NAME             framework
 )
@@ -87,14 +85,14 @@ target_sources(${libName}
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_rcc.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/k_flash.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/startup/sources/stm32f031k6.c
 )
 
 target_link_libraries(${libName}
+    cmsis_v5
 )
 
-#setTargetCompileOptions(libName)
 ## ---------------------------------------------------------------------------
-
 write_basic_package_version_file(${libName}ConfigVersion.cmake
     VERSION         ${libName}
     COMPATIBILITY   SameMajorVersion

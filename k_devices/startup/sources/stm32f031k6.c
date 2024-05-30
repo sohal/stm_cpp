@@ -1,35 +1,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "vectors_llvm.h"
+
+#include <stdint.h>
+#include "_llvm.h"
 #include "system_ARMCM0.h"
 #include "cmsis_compiler.h"
-
-/******************************************************************************
- * @file     startup_<Device>.c
- * @brief    CMSIS-Core(M) Device Startup File for
- *           Device <Device>
- * @version  V1.0.0
- * @date     20. January 2021
- ******************************************************************************/
-/*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /*---------------------------------------------------------------------------
   External References
  *---------------------------------------------------------------------------*/
@@ -47,11 +23,11 @@ extern __NO_RETURN void __PROGRAM_START(void);
  *---------------------------------------------------------------------------*/
 __NO_RETURN void Reset_Handler(void);
 __NO_RETURN void Default_Handler(void);
-
+/*<! System Init function is declared here, implemented later */
 void SystemInit(void);
-/* ToDo: Add Cortex exception handler according the used Cortex-Core */
+
 /*---------------------------------------------------------------------------
-  Exception / Interrupt Handler
+  Exception / Interrupt Handler Declarations
  *---------------------------------------------------------------------------*/
 void NMI_Handler                        (void) __attribute__((weak, alias("Default_Handler")));
 void HardFault_Handler                  (void) __attribute__((weak));
@@ -102,7 +78,7 @@ void USART1_IRQHandler                  (void) __attribute__((weak, alias("Defau
 /*   0                                                                                       */
 
 /*----------------------------------------------------------------------------
-  Exception / Interrupt Vector table
+  Exception / Interrupt Vector table Definitions
  *----------------------------------------------------------------------------*/
 
 #if defined(__GNUC__)

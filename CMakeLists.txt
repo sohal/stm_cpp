@@ -33,8 +33,10 @@ project(
 
 if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
     # Include dependencies from repositories ---------------------------------------
-    set(GITHUB_BRANCH_cmsis_v5 "5.9.0")
-    include(${cmake_scripts_SOURCE_DIR}/frameworks/cmsis_v5/cmsis_v5.cmake)
+    set(GITHUB_BRANCH_cmsis_v6 "6.1.0")
+    include(${cmake_scripts_SOURCE_DIR}/frameworks/cmsis_v6/cmsis_v6.cmake)
+    #set(GITHUB_BRANCH_cmsis_v6 "5.9.0")
+    #include(${cmake_scripts_SOURCE_DIR}/frameworks/cmsis_v5/cmsis_v5.cmake)
     #set(GITHUB_BRANCH_cmsis_dsp "1.15.0")
     #include(${cmake_scripts_SOURCE_DIR}/frameworks/cmsis_dsp/cmsis_dsp.cmake)
     #include(${cmake_scripts_SOURCE_DIR}/frameworks/segger_rtt/segger_rtt.cmake)

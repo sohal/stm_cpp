@@ -1,11 +1,9 @@
+
+#include <cstdint>
+#include "stm32f031k6.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <stdint.h>
-#include "_llvm.h"
-#include "system_ARMCM0.h"
-#include "cmsis_compiler.h"
 /*---------------------------------------------------------------------------
   External References
  *---------------------------------------------------------------------------*/
@@ -23,14 +21,56 @@ extern __NO_RETURN void __PROGRAM_START(void);
  *---------------------------------------------------------------------------*/
 __NO_RETURN void Reset_Handler(void);
 __NO_RETURN void Default_Handler(void);
+__NO_RETURN void Default_HF_Handler(void);
 /*<! System Init function is declared here, implemented later */
 void SystemInit(void);
+/*---------------------------------------------------------------------------
+  Hard Fault Handler
+ *---------------------------------------------------------------------------*/
+__NO_RETURN void Default_HF_Handler(void)
+{
+    while (1)
+        ;
+}
 
+/*---------------------------------------------------------------------------
+  Default Handler for Exceptions / Interrupts
+ *---------------------------------------------------------------------------*/
+__NO_RETURN void Default_Handler(void)
+{
+    while (1)
+        ;
+}
+
+/*---------------------------------------------------------------------------
+  Reset Handler called on controller reset
+ *---------------------------------------------------------------------------*/
+__NO_RETURN void Reset_Handler(void)
+{
+    __set_PSP(reinterpret_cast<uint32_t>(&__INITIAL_SP));
+
+/* ToDo: Initialize stack limit register for Armv8-M Main Extension based processors*/
+//    __set_MSP((uint32_t)(&__STACK_LIMIT));
+//    __set_PSP((uint32_t)(&__STACK_LIMIT));
+
+/* ToDo: Add stack sealing for Armv8-M based processors */
+#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+    __TZ_set_STACKSEAL_S((uint32_t *)(&__STACK_SEAL));
+#endif
+
+    SystemInit();      /* CMSIS System Initialization */
+    __PROGRAM_START(); /* Enter PreMain (C library entry point) */
+}
+
+void SystemInit(void)
+{
+
+}
 /*---------------------------------------------------------------------------
   Exception / Interrupt Handler Declarations
  *---------------------------------------------------------------------------*/
 void NMI_Handler                        (void) __attribute__((weak, alias("Default_Handler")));
-void HardFault_Handler                  (void) __attribute__((weak));
+void HardFault_Handler                  (void) __attribute__((weak, alias("Default_HF_Handler")));
 /*   0                                                                                       */
 /*   0                                                                                       */
 /*   0                                                                                       */
@@ -76,7 +116,9 @@ void USART1_IRQHandler                  (void) __attribute__((weak, alias("Defau
 /*   0                                                                                       */
 /*   0                                                                                       */
 /*   0                                                                                       */
-
+#ifdef __cplusplus
+}
+#endif
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table Definitions
  *----------------------------------------------------------------------------*/
@@ -88,7 +130,8 @@ void USART1_IRQHandler                  (void) __attribute__((weak, alias("Defau
 
 /* ToDo: Add Cortex exception vectors according the used Cortex-Core */
 extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
-const VECTOR_TABLE_Type __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
+const VECTOR_TABLE_Type __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE =
+{
     reinterpret_cast<VECTOR_TABLE_Type>(&__INITIAL_SP)           /* Initial Stack Pointer                     */,
     reinterpret_cast<VECTOR_TABLE_Type>(&Reset_Handler                      /* Reset Handler                             */),
     reinterpret_cast<VECTOR_TABLE_Type>(&NMI_Handler                                                                       ),
@@ -142,56 +185,13 @@ const VECTOR_TABLE_Type __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
 #pragma GCC diagnostic pop
 #endif
 
-/*---------------------------------------------------------------------------
-  Reset Handler called on controller reset
- *---------------------------------------------------------------------------*/
-__NO_RETURN void Reset_Handler(void)
-{
-    __set_PSP(reinterpret_cast<uint32_t>(&__INITIAL_SP));
-
-/* ToDo: Initialize stack limit register for Armv8-M Main Extension based processors*/
-//    __set_MSP((uint32_t)(&__STACK_LIMIT));
-//    __set_PSP((uint32_t)(&__STACK_LIMIT));
-
-/* ToDo: Add stack sealing for Armv8-M based processors */
-#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-    __TZ_set_STACKSEAL_S((uint32_t *)(&__STACK_SEAL));
-#endif
-
-    SystemInit();      /* CMSIS System Initialization */
-    __PROGRAM_START(); /* Enter PreMain (C library entry point) */
-}
-
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 #endif
 
-/*---------------------------------------------------------------------------
-  Hard Fault Handler
- *---------------------------------------------------------------------------*/
-void HardFault_Handler(void)
-{
-    while (1)
-        ;
-}
 
-/*---------------------------------------------------------------------------
-  Default Handler for Exceptions / Interrupts
- *---------------------------------------------------------------------------*/
-void Default_Handler(void)
-{
-    while (1)
-        ;
-}
-
-void SystemInit(void)
-{
-
-}
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #pragma clang diagnostic pop
 #endif
-#ifdef __cplusplus
-}
-#endif
+

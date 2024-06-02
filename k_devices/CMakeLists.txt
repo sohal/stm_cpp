@@ -89,7 +89,7 @@ target_sources(${libName}
 )
 
 target_link_libraries(${libName}
-    cmsis_v5
+    cmsis_v6
 )
 
 ## ---------------------------------------------------------------------------

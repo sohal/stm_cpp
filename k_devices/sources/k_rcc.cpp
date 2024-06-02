@@ -28,5 +28,4 @@ void k_rcc::enable_HSI(void) {
     LL_RCC_PLL_MUL_12
     
 }
-
 #endif

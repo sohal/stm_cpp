@@ -38,3 +38,6 @@ _deps
 # dot files
 *.dot
 *.dot.*
+
+# debugger
+*.jdebug.user

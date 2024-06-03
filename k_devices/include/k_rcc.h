@@ -35,7 +35,7 @@ public:
         return reinterpret_cast<void *>(RCC_ADDRESS);
     };
 //  method to initalize RCC
-    void Init(void);
+    void Init_Device (void);
 };
 
 static_assert(

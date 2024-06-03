@@ -1,0 +1,8 @@
+{
+    "editor.rulers": [80,120],
+    "sonarlint.pathToCompileCommands": "${workspaceFolder}/build/cpp_app/compile_commands.json",
+    "C_Cpp.errorSquiggles": "disabled",
+    "sonarlint.connectedMode.project": {
+
+    }
+}

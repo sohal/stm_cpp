@@ -6,6 +6,6 @@
 int32_t main(void)
 {
     k_rcc &RCC = *new k_rcc;
-    RCC.Init();
+    RCC.Init_Device();
     return 0;
 }

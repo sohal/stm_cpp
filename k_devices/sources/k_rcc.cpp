@@ -1,7 +1,7 @@
 #include <cstdint>
 #include "k_rcc.h"
 
-void k_rcc::Init(void) {
+void k_rcc::Init_Device(void) {
     uint32_t tmp = 0;
     k_rcc &RCC = *new k_rcc;
     RCC.APB2ENR |= k_rcc::APB2ENR_SYSCFGCOMPEN;
